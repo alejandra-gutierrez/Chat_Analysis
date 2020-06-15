@@ -1,0 +1,8 @@
+prefix=/Users/alejandra.gutierrez/PycharmProjects/Dialogues/venv
+
+Name: Pycairo
+Description: Python 3 bindings for cairo
+Version: 1.19.1
+Requires: cairo
+Cflags: -I${prefix}/include/pycairo
+Libs:
