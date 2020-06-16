@@ -13,6 +13,7 @@ from collections import Counter
 import mplcairo
 import matplotlib
 from matplotlib.font_manager import FontProperties
+from wordcloud import WordCloud
 
 df=pd.read_csv('conversation_Apolline.csv')
 
@@ -21,11 +22,34 @@ df.drop(['3'], axis=1, inplace=True)
 df.rename(columns={"0": "Date", "1": "name", "2":"message"}, inplace=True)
 df = df.dropna() # Drop empty values
 
+print(df.shape)
 df['date'] = pd.to_datetime(df['Date'], format = '%d-%m-%y %H:%M:%S')
 df['hour'] = df['date'].dt.hour
 df['weekday'] = df['date'].dt.weekday
-print(tabulate(df[50:100], headers='keys', tablefmt='psql'))
+# print(tabulate(df[50:100], headers='keys', tablefmt='psql'))
 df = df.set_index(pd.DatetimeIndex(df['Date']))
+#  ----------------------- Word Frequency --------------------------
+
+df['characters_nb'] = df.message.apply(len)
+df['words_nb'] = df.message.apply(lambda x: len(x.split()))
+
+df.groupby('name').mean().sort_values('characters_nb').round(2)
+# print(df.head())
+# print(df.message.value_counts().head(20)) #most common messages
+
+words = ''
+for i in df.message.values:
+    words += '{} '.format(i.lower()) # make all words lowercase
+
+wd = pd.DataFrame(Counter(words.split()).most_common(200), columns=['word', 'frequency'])
+wd = wd.iloc[100:]
+
+data = dict(zip(wd['word'].tolist(), wd['frequency'].tolist()))
+wc = WordCloud(stopwords=["de","ta","peu","j’ai","il","plus","en" ,"pas","du","un","ai","est","je","le", "et","la","audio "], width=800, height=400, max_words=200).generate_from_frequencies(data)
+plt.figure(figsize=(10, 10))
+plt.imshow(wc, interpolation='bilinear')
+plt.axis('off')
+plt.show()
 
 # ------------ Plot message frequency over days -------------------
 

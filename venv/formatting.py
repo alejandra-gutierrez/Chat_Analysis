@@ -20,6 +20,8 @@ data = data.replace(',,,', '')
 data = data.replace('[', '')
 data = data.replace(']', '')
 data = data.replace('\n',',\n')
+data = data.replace('audio',',')
+data = data.replace('omitted','')
 
 print(type(data))
 print(data[850:1050])
