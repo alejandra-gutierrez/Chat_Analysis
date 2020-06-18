@@ -22,6 +22,8 @@ data = data.replace(']', '')
 data = data.replace('\n',',\n')
 data = data.replace('audio',',')
 data = data.replace('omitted','')
+data = data.replace('image','')
+
 
 print(type(data))
 print(data[850:1050])
@@ -30,6 +32,6 @@ text_file = open("test.txt", "w")
 n = text_file.write(data)
 
 read_file = pd.read_csv(r'test.txt', header = None,  error_bad_lines=False)
-# read_file.to_csv (r'conversation_Apolline.csv', index=None)
+read_file.to_csv (r'conversation_Apolline.csv', index=None)
 
 
