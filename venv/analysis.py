@@ -17,7 +17,8 @@ import seaborn as sns
 from wordcloud import WordCloud
 
 df=pd.read_csv('conversation_Apolline.csv')
-
+print(df.head())
+print(df.head(-5))
 df = df.dropna(how = 'all')
 df.drop(['3'], axis=1, inplace=True)
 df.rename(columns={"0": "Date", "1": "name", "2":"message"}, inplace=True)
@@ -35,16 +36,15 @@ df = df.set_index(pd.DatetimeIndex(df['Date']))
 df1 = df.groupby(["month", "year"]).count().reset_index()
 hm = df1.pivot("month", "year", "message")
 ax = sns.heatmap(hm, cmap=sns.cm.rocket_r)
-plt.show()
+# plt.show()
 
 #  ----------------------- Word Frequency --------------------------
 
 df['characters_nb'] = df.message.apply(len)
 df['words_nb'] = df.message.apply(lambda x: len(x.split()))
-
 # print(df.groupby('name').mean().sort_values('characters_nb').round(2))
 # print(df.head())
-# print(df.message.value_counts().head(20)) #most common messages
+print(df.message.value_counts().head(20)) #most common messages
 
 words = ''
 for i in df.message.values:
@@ -65,7 +65,8 @@ del(data["être"])
 del(data["sont"])
 
 
-wc = WordCloud(stopwords=["de","ta","️j’ai","j'ai","peu","il","plus","en" ,"pas","du","un","ai","est","je","le", "et","la","audio ", "j'ai"], width=800, height=400, max_words=200).generate_from_frequencies(data)
+wc = WordCloud(background_color='white',
+               stopwords=["de","ta","️j’ai","j'ai","peu","il","plus","en" ,"pas","du","un","ai","est","je","le", "et","la","audio ", "j'ai"], width=800, height=400, max_words=200).generate_from_frequencies(data)
 plt.figure(figsize=(10, 10))
 plt.imshow(wc, interpolation='bilinear')
 plt.axis('off')
