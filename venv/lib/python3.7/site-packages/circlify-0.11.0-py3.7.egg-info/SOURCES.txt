@@ -1,0 +1,8 @@
+README.rst
+circlify.py
+setup.cfg
+setup.py
+circlify.egg-info/PKG-INFO
+circlify.egg-info/SOURCES.txt
+circlify.egg-info/dependency_links.txt
+circlify.egg-info/top_level.txt

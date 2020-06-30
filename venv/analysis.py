@@ -66,7 +66,11 @@ del(data["sont"])
 
 
 wc = WordCloud(background_color='white',
-               stopwords=["de","ta","️j’ai","j'ai","peu","il","plus","en" ,"pas","du","un","ai","est","je","le", "et","la","audio ", "j'ai"], width=800, height=400, max_words=200).generate_from_frequencies(data)
+               stopwords=["de","ta","️j’ai","j'ai","peu","il","plus","en" ,"pas","du","un","ai",
+                          "est","je","le", "et","la","audio ", "j'ai"],
+                width=800,
+               height=400,
+               max_words=200).generate_from_frequencies(data)
 plt.figure(figsize=(10, 10))
 plt.imshow(wc, interpolation='bilinear')
 plt.axis('off')
