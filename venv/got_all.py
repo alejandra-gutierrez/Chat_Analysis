@@ -1,19 +1,10 @@
 import regex as re
 import pandas as pd
-import matplotlib.pyplot as plt
 import numpy as np
 from tabulate import tabulate
-import plotly.express as px
-from plotly.subplots import make_subplots
-from tabulate import tabulate
-from datetime import datetime
 from collections import Counter
 import matplotlib
-from matplotlib.font_manager import FontProperties
-from plotly.subplots import make_subplots
-import seaborn as sns
 import os
-from wordcloud import WordCloud
 
 
 def line_prepender(filename, line):
@@ -79,11 +70,11 @@ df1.loc[(df1.name == 'khal'),'name']='khal drogo'
 # # --------------------------------- Merge dataframes ----------------------
 merged = df1.merge(df, left_on='name', right_on='person')
 merged['words'] = [len(x.split()) for x in merged['line'].tolist()]
+
+merged['season'] = merged['season'].map(lambda x: x.lstrip('season').rstrip('aAbBcC'))
+merged['episode'] = merged['episode'].str.replace(r'.txt', '')
+merged['episode'] = merged['episode'].map(lambda x: x.lstrip('e').rstrip('aAbBcC'))
+
 print(merged.head())
-# print(tabulate(merged, tablefmt='psql'))
-# print(tabulate(merged, tablefmt='psql'))
-# merged1 = merged.groupby(['sex'])['words'].sum().reset_index()
-
-
-
+# merged.to_csv('Data/all_episodes.csv')
 
